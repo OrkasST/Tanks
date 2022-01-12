@@ -1,16 +1,18 @@
 let gameStarted = false;
 const start = document.getElementById('start');
 const starter = document.querySelector('.starter');
+const title = document.querySelector('.head');
 const theme = document.getElementById('theme');
 const shootSnd = document.getElementById('shoot');
 const blast = document.getElementById('blast');
 
-
+let paused = false;
 
 starter.addEventListener('click', (e) => {
   if (!gameStarted) {
     starter.classList.add('_transit');
     starter.classList.add('_full');
+    title.classList.add('_transparent');
     setTimeout(() => {
       starter.classList.add('_hidden');
       start.classList.add('_hidden');
@@ -72,6 +74,7 @@ function Game (data, time) {
   id = requestAnimationFrame((time) => {
     Game(gameData, time);
   });
+  if(paused) pause();
   if(!alive) death();
 }
 
@@ -160,6 +163,15 @@ function clearScreen() {
 
 
 //game functions
+
+function pause() {
+  cancelAnimationFrame(id);
+}
+
+function resume() {
+  paused = false;
+  Game(gameData, 0);
+}
 
 function collisionCheck(objs, shoots) {
   for (let i = 0; i < objs.length; i++) {
@@ -399,6 +411,7 @@ function death() {
   setTimeout(() => {
     starter.classList.remove('_transit');
     start.classList.remove('_hidden');
+    title.classList.remove('_transparent');
     gameStarted = false;
   }, 1900);
 }
@@ -455,7 +468,6 @@ document.addEventListener('keydown', (e) => {
     case 'KeyD': player.movement.direction = 'right'; player.movement.status = 'moving'; player.view.sx = 1; break;
     case 'KeyS': player.movement.direction = 'down'; player.movement.status = 'moving'; player.view.sx = 2; break;
     case 'KeyA': player.movement.direction = 'left'; player.movement.status = 'moving'; player.view.sx = 3; break;
-    // case 'KeyQ': shoot(player); break;
   }
 });
 
@@ -482,8 +494,8 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// document.addEventListener('keyup', (e) => {
-//   if(e.code === 'KeyW' || e.code === 'KeyA' || e.code === 'KeyS' || e.code === 'KeyD') {
-//     player.movement.status = 'stop';  
-//   }
-// })
+window.addEventListener('contextmenu', e => {
+  e.preventDefault();
+  e.stopPropagation();
+  paused ? resume() : paused = true;
+});

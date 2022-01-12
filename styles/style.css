@@ -15,6 +15,31 @@
   overflow: hidden;
 }
 
+.head {
+  position: absolute;
+  top: 6rem;
+  left: 50%;
+  transform: translate(-50%);
+
+  width: 30rem;
+  height: 7rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 1.7rem 1.3rem rgba(146, 146, 146, 0.1), 0 0 1rem 0.6rem rgba(146, 146, 146, 0.4);
+
+  opacity: 1;
+  transition: 0.3s;
+
+}
+
+.title {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  font-size: 2.4rem;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
 .starter {
   position: absolute;
   top: 50%;
@@ -56,6 +81,10 @@
 
 ._hidden {
   display: none;
+}
+
+._transparent {
+  opacity: 0;
 }
 
 ._full{
