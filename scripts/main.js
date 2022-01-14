@@ -1,11 +1,17 @@
-let gameStarted = false;
+//UI elem-s
 const start = document.getElementById('start');
 const starter = document.querySelector('.starter');
 const title = document.querySelector('.head');
+const menu = document.querySelector('#menu');
+
+//sounds
 const theme = document.getElementById('theme');
 const shootSnd = document.getElementById('shoot');
+const enShootSnd = document.getElementById('enShoot');
 const blast = document.getElementById('blast');
 
+//game flags
+let gameStarted = false;
 let paused = false;
 
 starter.addEventListener('click', (e) => {
@@ -21,7 +27,7 @@ starter.addEventListener('click', (e) => {
     theme.play();
 		musicInterval = setInterval(() => {
 			theme.currentTime = 0;
-	}, 65000);
+	}, 232000);
   }
   
 });
@@ -192,6 +198,7 @@ function collisionCheck(objs, shoots) {
          objs.splice(i,1);
          i--;
          shoots.splice(j,1);
+         blast.pause();
          blast.currentTime = 0; 
          blast.play();
          setTimeout(() => {
@@ -227,11 +234,23 @@ function move(obj) {
 }
 
 function shoot(obj, dir) {
-  shootSnd.play();
-  setTimeout(() => {
+  if (obj.tag === 'enemy') { 
+    enShootSnd.pause();
+    enShootSnd.currentTime = 0; 
+    enShootSnd.play();
+    setTimeout(() => {
+      enShootSnd.pause();
+      enShootSnd.currentTime = 0; 
+    }, 100);
+  } else {
     shootSnd.pause();
     shootSnd.currentTime = 0; 
-  }, 100);
+    shootSnd.play();
+    setTimeout(() => {
+      shootSnd.pause();
+      shootSnd.currentTime = 0; 
+    }, 100);
+  }
   gameData[1].push(new GameObject({
     tag: obj.tag + '_shoot',
     position: {
@@ -497,5 +516,17 @@ document.addEventListener("click", (e) => {
 window.addEventListener('contextmenu', e => {
   e.preventDefault();
   e.stopPropagation();
-  paused ? resume() : paused = true;
+  // menu.classList.toggle('_hidden');
+  if (paused) {
+    menu.classList.add('_close');
+    setTimeout(() => {
+      menu.classList.add('_hidden');
+      menu.classList.remove('_close');
+      resume();
+    }, 200);
+  }
+  else {
+    paused = true;
+    menu.classList.remove('_hidden');
+  }
 });

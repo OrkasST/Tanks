@@ -75,6 +75,70 @@
   background: #000000;
 }
 
+.menu_wrapper {
+  position: fixed;
+  width: 25rem;
+  height: 35rem;
+  top: 15rem;
+  left: 50%;
+  transform: translate(-50%);
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background: #ffffff;
+  border-radius: 2rem;
+
+  z-index: 2;
+  animation: open 0.2s linear;
+}
+
+@keyframes open{
+  0%{
+    width: 0rem;
+    height: 0rem;
+  }
+  100%{
+    width: 25rem;
+    height: 35rem; 
+  }
+}
+
+._close {
+  animation: close 0.2s linear;
+}
+
+@keyframes close{
+  0%{
+    width: 25rem;
+    height: 35rem;
+  }
+  100%{
+    width: 0rem;
+    height: 0rem; 
+  }
+}
+
+.content {
+  position: relative;
+  width: 90%;
+  height: 3rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.content:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 1.1rem 0.8rem rgba(146, 146, 146, 0.1), 0 0 0.5rem 0.3rem rgba(146, 146, 146, 0.4);
+}
+/* .my-div{
+  animation: animatename 1s linear infinite;
+  /* animation shorthand
+  animation: animation-name animation-duration animation-direction animation-iteration-count
+} */
+
 ._transit{
   transition: 1s;
 }
