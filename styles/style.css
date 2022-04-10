@@ -128,6 +128,17 @@
   top: 0;
 }
 
+@media (max-width: 600px) {
+  .head {
+    width: 80%;
+    height: 5rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+}
+
 
 @keyframes open{
   0%{
