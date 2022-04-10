@@ -15,7 +15,7 @@ const blast = document.getElementById('blast');
 let gameStarted = false;
 let paused = false;
 
-starter.addEventListener('click', (e) => {
+starter.addEventListener('click', (e) => {``
   if (!gameStarted) {
     starter.classList.add('_transit');
     starter.classList.add('_full');
