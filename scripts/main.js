@@ -3,7 +3,8 @@ const start = document.getElementById('start');
 const starter = document.querySelector('.starter');
 const title = document.querySelector('.head');
 const menu = document.querySelector('#menu');
-
+const controlButtons = document.querySelector('.mobile_controls');
+// console.log(controlButtons.children);
 //sounds
 const theme = document.getElementById('theme');
 const shootSnd = document.getElementById('shoot');
@@ -19,6 +20,7 @@ starter.addEventListener('click', (e) => {
     starter.classList.add('_transit');
     starter.classList.add('_full');
     title.classList.add('_transparent');
+    if(window.innerWidth < 600) controlButtons.classList.remove('_hidden');
     setTimeout(() => {
       starter.classList.add('_hidden');
       start.classList.add('_hidden');
@@ -63,7 +65,7 @@ function init() {
   }
   images = {};
   loadImages().then(names => {
-    console.log(player);
+    // console.log(player);
     player.view.image = images['player_tank'];
     Game(gameData, 0);
   }).catch(e => console.log(e));
@@ -377,7 +379,7 @@ function load(name, src) {
   return new Promise( (resolve, reject) => {
     const img = new Image();
     images[name] = img;
-    console.log(window.location.origin + src);
+    // console.log(window.location.origin + src);
     img.onload = () => resolve(name); 
     img.onerror = (error) => reject(error);
     img.src = src;
@@ -408,7 +410,7 @@ function explode(obj) {
 }
 
 function animateExplosion(expl) {
-  console.log(expl);
+  // console.log(expl);
   if (expl.view.sx <= 5) expl.view.sx++;
   else return false;
   return true;
@@ -423,6 +425,7 @@ function death() {
   theme.pause();
   theme.currentTime = 0; 
   clearScreen();
+  controlButtons.classList.add('_hidden');
   starter.classList.remove('_hidden');
   setTimeout(() => {
     starter.classList.remove('_full');
@@ -512,6 +515,10 @@ document.addEventListener("click", (e) => {
     shoot(player, dir); 
   }
 });
+
+controlButtons.childNodes.forEach(btn => btn.addEventListener('click', (e) => {
+  player.movement.direction = btn.id; player.movement.status = 'moving'; player.view.sx = 0;
+}))
 
 window.addEventListener('contextmenu', e => {
   e.preventDefault();
